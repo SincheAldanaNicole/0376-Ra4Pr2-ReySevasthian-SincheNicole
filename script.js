@@ -4,8 +4,8 @@
 al momento de cargar la página*/
 const codigoSecreto = []
 
-for (let i = 0; i <4; i++){
-    codigoSecreto.push(Math.round(Math.random()*10))
+for (let i = 0; i < 4; i++){
+    codigoSecreto.push(Math.floor(Math.random() * 10))
 }
 console.log(codigoSecreto)
 
@@ -15,32 +15,32 @@ function compararIntento (intentoUsuario){
     const resultados = []
 
     for (let i = 0; i < 4; i++) {
-        if (codiUsuari[i] == codiSecret[i]) {
-            resultats.push("1");
-        } else if (codiSecret.includes(codiUsuari[i])) {
+        if (intentoUsuario[i] == codigoSecreto[i]) {
+            resultados.push("1");
+        } else if (codigoSecreto.includes(intentoUsuario[i])) {
+            resultados.push("Ø");
         } else {
-            resultats.push("Ø");
-            resultats.push("×");
+            resultados.push("×");
         }
     }
 
-    return resultats;
+    return resultados;
 }
 
 //Comprobar que el juego ha terminado, perdido o ganado
 
 const maxIntentos = 5;
-let intetosRestantes = maxIntentos
+let intentosRestantes = maxIntentos
 
 function comprovarFinalJuego (resultados){
-    if (resultats[0] == "1" && resultados [1] == "1" && resultados [2] == "1" && resultados[3] == "1"){
+    if (resultados[0] == "1" && resultados[1] == "1" && resultados[2] == "1" && resultados[3] == "1"){
         console.log("Has ganado, eres un genio")
         return true
     }
-    intetosRestantes--;
+    intentosRestantes--;
     
-    if (intetosRestantes == 0){
-        console.log ("Has perdido, no sirves pa nada, el código era: " + codigoSecreto)
+    if (intentosRestantes == 0){
+        console.log("Has perdido, no sirves pa nada, el código era: " + codigoSecreto)
         return true        
     }
     return false
