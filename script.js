@@ -26,3 +26,22 @@ function compararIntento (intentoUsuario){
 
     return resultats;
 }
+
+//Comprobar que el juego ha terminado, perdido o ganado
+
+const maxIntentos = 5;
+let intetosRestantes = maxIntentos
+
+function comprovarFinalJuego (resultados){
+    if (resultats[0] == "1" && resultados [1] == "1" && resultados [2] == "1" && resultados[3] == "1"){
+        console.log("Has ganado, eres un genio")
+        return true
+    }
+    intetosRestantes--;
+    
+    if (intetosRestantes == 0){
+        console.log ("Has perdido, no sirves pa nada, el código era: " + codigoSecreto)
+        return true        
+    }
+    return false
+}
