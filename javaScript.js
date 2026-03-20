@@ -68,3 +68,51 @@ function logTerminal(missatge, tipus) {
     // Hacemos scroll automático hacia abajo para que siempre se vea el último mensaje
     terminal.scrollTop = terminal.scrollHeight;
 }
+// Escuchamos el clic del botón, recogemos los valores de los selects
+// y actualizamos el contador de rondas.
+
+// Cogemos el botón "Executar Codi" por su id
+const boto = document.getElementById('btn-enviar');
+ 
+// Cogemos el <span> que muestra el número de rondas restantes
+const comptadorRondes = document.getElementById('rondes-restants');
+ 
+// Añadimos un "escuchador" al botón: cuando el usuario haga clic, se ejecuta el código
+boto.addEventListener('click', function() {
+ 
+    // Si ya no quedan intentos, avisamos y salimos de la función
+    if (intentsRestants <= 0) {
+        logTerminal('ACCÉS DENEGAT. No queden intents disponibles.', 'error');
+        return;
+    }
+ 
+    // Creamos un array vacío donde guardaremos los 4 números que ha elegido el usuario
+    const intent = [];
+ 
+    // Recorremos los 4 selects y cogemos el valor de cada uno
+    selects.forEach(function(select) {
+        // parseInt convierte el valor de texto a número entero
+        intent.push(parseInt(select.value));
+    });
+ 
+    // Mostramos en la terminal el código que ha introducido el usuario
+    logTerminal('Codi introduït: [ ' + intent.join(' - ') + ' ]');
+
+    // Restamos 1 al contador de intentos
+    intentsRestants--;
+ 
+    // Actualizamos el número que se ve en pantalla (el <span>)
+    comptadorRondes.textContent = intentsRestants;
+ 
+    // Si ya no quedan intentos, mostramos Game Over y bloqueamos el botón
+    if (intentsRestants === 0) {
+        logTerminal('--- CONNEXIÓ TALLADA. GAME OVER ---', 'error');
+ 
+        // Desactivamos el botón para evitar que el usuario pueda seguir
+        boto.disabled = true;
+ 
+        // Lo ponemos un poco transparente visualmente para que parezca apagado
+        boto.style.opacity = '0.4';
+        boto.style.cursor = 'not-allowed';
+    }
+});
