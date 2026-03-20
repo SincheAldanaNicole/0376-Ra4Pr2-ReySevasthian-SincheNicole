@@ -14,12 +14,15 @@ console.log(codigoSecreto)
 function compararIntento (intentoUsuario){
     const resultados = []
 
-    for (let i = 0; i < 4; i++){
-        if (intentoUsuario [i]== codigoSecreto [i]){
-            resultados.push ("1")
+    for (let i = 0; i < 4; i++) {
+        if (codiUsuari[i] == codiSecret[i]) {
+            resultats.push("1");
+        } else if (codiSecret.includes(codiUsuari[i])) {
         } else {
-            resultados.push ("x")
+            resultats.push("Ø");
+            resultats.push("×");
         }
     }
-    return resultados;
+
+    return resultats;
 }
