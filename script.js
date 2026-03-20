@@ -68,6 +68,7 @@ function logTerminal(missatge, tipus) {
     // Hacemos scroll automático hacia abajo para que siempre se vea el último mensaje
     terminal.scrollTop = terminal.scrollHeight;
 }
+
 // Escuchamos el clic del botón, recogemos los valores de los selects
 // y actualizamos el contador de rondas.
 
@@ -81,7 +82,8 @@ const comptadorRondes = document.getElementById('rondes-restants');
 boto.addEventListener('click', function() {
  
     // Si ya no quedan intentos, avisamos y salimos de la función
-    if (intentsRestants <= 0) {
+    // "intentosRestantes" es la variable que declara el Estudiant B
+    if (intentosRestantes <= 0) {
         logTerminal('ACCÉS DENEGAT. No queden intents disponibles.', 'error');
         return;
     }
@@ -98,21 +100,32 @@ boto.addEventListener('click', function() {
     // Mostramos en la terminal el código que ha introducido el usuario
     logTerminal('Codi introduït: [ ' + intent.join(' - ') + ' ]');
 
-    // Restamos 1 al contador de intentos
-    intentsRestants--;
+    // INTEGRACIÓN CON ESTUDIANT B
+    // Llamamos a sus funciones y mostramos el resultado en la terminal
+
+        // Llamamos a la función del compañero que compara el intento con el código secreto
+    const resultados = compararIntento(intent);
  
-    // Actualizamos el número que se ve en pantalla (el <span>)
-    comptadorRondes.textContent = intentsRestants;
+    // Mostramos las pistas que ha devuelto la función
+    logTerminal('Resultat: ' + resultados.join('  '));
  
-    // Si ya no quedan intentos, mostramos Game Over y bloqueamos el botón
-    if (intentsRestants === 0) {
-        logTerminal('--- CONNEXIÓ TALLADA. GAME OVER ---', 'error');
+    // Llamamos a la función del compañero que comprueba si hemos ganado o perdido
+    const juegoTerminado = comprovarFinalJuego(resultados);
+ 
+    // Si el juego ha terminado, bloqueamos el botón
+    if (juegoTerminado) {
  
         // Desactivamos el botón para evitar que el usuario pueda seguir
         boto.disabled = true;
  
-        // Lo ponemos un poco transparente visualmente para que parezca apagado
+        // Lo ponemos transparente para que parezca apagado
         boto.style.opacity = '0.4';
         boto.style.cursor = 'not-allowed';
+ 
+    } else {
+ 
+        // Si el juego continúa, actualizamos el contador visual de rondas
+        // "intetosRestantes" ya lo ha restado la función del compañero
+        comptadorRondes.textContent = intentosRestantes;
     }
 });
