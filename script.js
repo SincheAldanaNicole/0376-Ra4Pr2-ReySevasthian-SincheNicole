@@ -8,6 +8,18 @@ for (let i = 0; i <4; i++){
     codigoSecreto.push(Math.round(Math.random()*10))
 }
 console.log(codigoSecreto)
-/*2. Crear una función que reciba el intento del 
-usuario y que retorne un array de pistas (1, Ø, x)*/
 
+//Comparar posición por posición el intento la const de antes (codigoSecreto)
+
+function compararIntento (intentoUsuario){
+    const resultados = []
+
+    for (let i = 0; i < 4; i++){
+        if (intentoUsuario [i]== codigoSecreto [i]){
+            resultados.push ("1")
+        } else {
+            resultados.push ("x")
+        }
+    }
+    return resultados;
+}
